@@ -39,10 +39,22 @@ function mouseoutCard() {
     this.getElementsByClassName('card__arrow')[0].classList.remove('card__arrow--inverse');
 }
 
-function cardImageOverlayTextSize() {
-    for (var i = 0; i < cardImageOverlayText.length; i++) {
-        cardImageOverlayText[i].style.width = (cardImageWrapper[0].clientWidth - 40) + 'px';
-        cardImageOverlayText[i].style.height = (cardImageWrapper[0].clientHeight - 40) + 'px';
+function cardImageOverlayTextSize() { 
+    var imgs = document.images, len = imgs.length, counter = 0;
+    [].forEach.call( imgs, function( img ) {
+        if( img.complete)
+            incrementCounter();
+        else
+            img.addEventListener( 'load', incrementCounter, false );
+    });
+    function incrementCounter() {
+        counter++;
+        if ( counter === len ) {
+            for (var i = 0; i < cardImageOverlayText.length; i++) {
+                cardImageOverlayText[i].style.width = (cardImageWrapper[0].clientWidth - 40) + 'px';
+                cardImageOverlayText[i].style.height = (cardImageWrapper[0].clientHeight - 40) + 'px';
+            }
+        }
     }
 }
 
